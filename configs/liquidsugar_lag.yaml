@@ -1,0 +1,83 @@
+# =========================
+# LiquidSugar lag 生成实验配置
+# =========================
+
+# 原始 CSV 路径
+input_csv: /projects/p32954/dimf_liquid_sugar_repo-490/data/LiquidSugar.csv
+
+# 输出目录
+output_root: /projects/p32954/liquidsugar_lag_framework/outputs
+
+# 实验名；最终输出目录为 {output_root}/{experiment_name}
+experiment_name: liquidsugar_scheme_b_stage2_lag
+
+# 时间列与目标列
+timestamp_col: TimeStamp
+target_col: yield_flow
+nominal_step_minutes: 15
+
+# 特征前缀
+feature_prefix:
+  feed: feed_
+  stage1: stage1_
+  stage2: stage2_
+  stage3: stage3_
+
+# 原始 gap 分段阈值；超过该分钟数则切新 segment
+g_break_minutes: 120
+
+# 时间顺序切分比例
+split:
+  train_ratio: 0.7
+  val_ratio: 0.1
+  test_ratio: 0.2
+
+# 随机种子
+seed: 20260404
+
+# lag 注入设置
+injection:
+  # 当前主实验：只对 stage2 注入
+  injection_stage: stage2
+
+  # 三种 lag：2 / 4 / 6 step = 30 / 60 / 90 min
+  lag_steps: [2, 4, 6]
+
+  # 主实验默认固定 32 step；若做 sensitivity，可切到 random_range
+  block_length_mode: fixed
+  block_length_default: 32
+  block_length_range: [24, 48]
+
+  # block 之间最少留出的正常缓冲长度
+  buffer_steps: 16
+
+  # 优先使用 >=160 step 的 segment；不够时再放宽到 >=128
+  preferred_min_segment_length: 160
+  fallback_min_segment_length: 128
+
+  # 第一轮主实验：同一 segment 最多放 1 个 block
+  max_blocks_per_segment: 1
+
+  # 方案 B：train / val / test 都注入，但位置不同
+  blocks_per_split:
+    train:
+      2: 2
+      4: 2
+      6: 2
+    val:
+      2: 1
+      4: 1
+      6: 1
+    test:
+      2: 2
+      4: 2
+      6: 2
+
+# 归一化设置
+scaling:
+  method: zscore
+
+# 滑窗设置
+window:
+  history_steps: 96
+  horizon_steps: 4

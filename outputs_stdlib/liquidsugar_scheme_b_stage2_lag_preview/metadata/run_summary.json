@@ -1,0 +1,41 @@
+{
+  "input_csv": "/projects/p32954/dimf_liquid_sugar_repo-490/data/LiquidSugar.csv",
+  "original_csv_unchanged": true,
+  "timestamp_col": "TimeStamp",
+  "target_col": "yield_flow",
+  "stage2_columns": [
+    "stage2_var1",
+    "stage2_var2",
+    "stage2_var3",
+    "stage2_var4",
+    "stage2_var5",
+    "stage2_var6",
+    "stage2_var7",
+    "stage2_var8",
+    "stage2_var9",
+    "stage2_var10",
+    "stage2_var11",
+    "stage2_var12"
+  ],
+  "detail_stage2_columns": [
+    "stage2_var1",
+    "stage2_var5",
+    "stage2_var8",
+    "stage2_var12"
+  ],
+  "nominal_step_minutes": 15,
+  "split_summary": {
+    "row_count": 22854,
+    "split_row_count": {
+      "train": 15997,
+      "val": 2285,
+      "test": 4572
+    },
+    "split_ratio_realized": {
+      "train": 0.6999649951868382,
+      "val": 0.0999824975934191,
+      "test": 0.20005250721974271
+    },
+    "interpolated_row_count": 216
+  }
+}
