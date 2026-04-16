@@ -26,11 +26,18 @@ feature_prefix:
 # 原始 gap 分段阈值；超过该分钟数则切新 segment
 g_break_minutes: 120
 
-# 时间顺序切分比例
+# 按 segment 起始时间排序后，使用完整 segment 做切分；
+# 默认按累计有效窗口数逼近 70 / 10 / 20
 split:
   train_ratio: 0.7
   val_ratio: 0.1
   test_ratio: 0.2
+  allocation_unit: effective_windows
+  # 保证每个 split 至少有足够多的完整 segment，满足 block 注入计划
+  min_segments:
+    train: 6
+    val: 4
+    test: 6
 
 # 随机种子
 seed: 20260404

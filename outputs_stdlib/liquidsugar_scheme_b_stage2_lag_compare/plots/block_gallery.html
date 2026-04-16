@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Stage2 Lag Block Gallery</title>
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --text: #0f172a;
+      --muted: #475569;
+      --card: #ffffff;
+      --line: #e2e8f0;
+    }
+    body {
+      margin: 0;
+      padding: 28px;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+      color: var(--text);
+    }
+    .shell {
+      max-width: 1540px;
+      margin: 0 auto;
+    }
+    h1 {
+      margin: 0 0 10px 0;
+      font-size: 30px;
+    }
+    .intro {
+      color: var(--muted);
+      margin-bottom: 18px;
+      line-height: 1.45;
+    }
+    .links {
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .links a {
+      color: #0f766e;
+      margin-right: 18px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+    }
+    .meta h2 {
+      margin: 0 0 8px 0;
+      font-size: 20px;
+    }
+    .meta p {
+      margin: 4px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .image-wrap {
+      display: block;
+      margin-top: 14px;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <h1>Stage2 Lag Block Gallery</h1>
+    <p class="intro">
+      Detailed block-by-block zoom around every injected lag region.
+      Representative stage2 columns shown: stage2_var1, stage2_var5, stage2_var8, stage2_var12.
+      Summary: train: 6 blocks | val: 3 blocks | test: 6 blocks.
+    </p>
+    <div class="links">
+      <a href="lag_timeline.svg">Open full lag timeline</a>
+      <a href="stage2_var_example.svg">Open quick example sheet</a>
+    </div>
+    <section class="grid">
+      <article class="card">
+              <div class="meta">
+                <h2>train | segment 11 | lag=6</h2>
+                <p><strong>Injected:</strong> 2021-05-27 15:30 to 2021-05-27 23:15</p>
+                <p><strong>Source:</strong> 2021-05-27 14:00 to 2021-05-27 21:45</p>
+                <p><strong>Delay:</strong> 6 steps (90 min)</p>
+                <p><strong>Block length:</strong> 32 steps</p>
+              </div>
+              <a class="image-wrap" href="blocks/train_seg11_lag6_start2054_end2085.svg" target="_blank" rel="noopener noreferrer">
+                <img src="blocks/train_seg11_lag6_start2054_end2085.svg" alt="train | segment 11 | lag=6" loading="lazy" />
+              </a>
+            </article>
+<article class="card">
+              <div class="meta">
+                <h2>train | segment 28 | lag=4</h2>
+                <p><strong>Injected:</strong> 2021-07-14 20:00 to 2021-07-15 03:45</p>
+                <p><strong>Source:</strong> 2021-07-14 19:00 to 2021-07-15 02:45</p>
+                <p><strong>Delay:</strong> 4 steps (60 min)</p>
+                <p><strong>Block length:</strong> 32 steps</p>
+              </div>
+              <a class="image-wrap" href="blocks/train_seg28_lag4_start4532_end4563.svg" target="_blank" rel="noopener noreferrer">
+                <img src="blocks/train_seg28_lag4_start4532_end4563.svg" alt="train | segment 28 | lag=4" loading="lazy" />
+              </a>
+            </article>
+<article class="card">
+              <div class="meta">
+                <h2>train | segment 34 | lag=2</h2>
+                <p><strong>Injected:</strong> 2021-08-12 11:00 to 2021-08-12 18:45</p>
+                <p><strong>Source:</strong> 2021-08-12 10:30 to 2021-08-12 18:15</p>
+                <p><strong>Delay:</strong> 2 steps (30 min)</p>
+                <p><strong>Block length:</strong> 32 steps</p>
+              </div>
+              <a class="image-wrap" href="blocks/train_seg34_lag2_start6352_end6383.svg" target="_blank" rel="noopener noreferrer">
+                <img src="blocks/train_seg34_lag2_start6352_end6383.svg" alt="train | segment 34 | lag=2" loading="lazy" />
+              </a>
+            </article>
+<article class="card">
+              <div class="meta">
+                <h2>train | segment 41 | lag=6</h2>
+                <p><strong>Injected:</strong> 2021-09-15 08:00 to 2021-09-15 15:45</p>
+                <p><strong>Source:</strong> 2021-09-15 06:30 to 2021-09-15 14:15</p>
+                <p><strong>Delay:</strong> 6 steps (90 min)</p>
+                <p><strong>Block length:</strong> 32 steps</p>
+              </div>
+              <a class="image-wrap" href="blocks/train_seg41_lag6_start8477_end8508.svg" target="_blank" rel="noopener noreferrer">
+                <img src="blocks/train_seg41_lag6_start8477_end8508.svg" alt="train | segment 41 | lag=6" loading="lazy" />
+              </a>
+            </article>
+<article class="card">
+              <div class="meta">
+                <h2>train | segment 55 | lag=2</h2>
+                <p><strong>Injected:</strong> 2021-11-17 02:15 to 2021-11-17 10:00</p>
+                <p><strong>Source:</strong> 2021-11-17 01:45 to 2021-11-17 09:30</p>
+                <p><strong>Delay:</strong> 2 steps (30 min)</p>
+                <p><strong>Block length:</strong> 32 steps</p>
+              </div>
+              <a class="image-wrap" href="blocks/train_seg55_lag2_start12367_end12398.svg" target="_blank" rel="noopener noreferrer">
+                <img src="blocks/train_seg55_lag2_start12367_end12398.svg" alt="train | segment 55 | lag=2" loading="lazy" />
+              </a>
+            </article>
+<article class="card">
+              <div class="meta">
+                <h2>train | segment 65 | lag=4</h2>
+                <p><strong>Injected:</strong> 2022-01-12 17:15 to 2022-01-13 01:00</p>
+                <p><strong>Source:</strong> 2022-01-12 16:15 to 2022-01-13 00:00</p>
+                <p><strong>Delay:</strong> 4 steps (60 min)</p>
+                <p><strong>Block length:</strong> 32 steps</p>
+              </div>
+              <a class="image-wrap" href="blocks/train_seg65_lag4_start15204_end15235.svg" target="_blank" rel="noopener noreferrer">
+                <img src="blocks/train_seg65_lag4_start15204_end15235.svg" alt="train | segment 65 | lag=4" loading="lazy" />
+              </a>
+            </article>
+<article class="card">
+              <div class="meta">
+                <h2>val | segment 67 | lag=4</h2>
+                <p><strong>Injected:</strong> 2022-01-27 16:45 to 2022-01-28 00:30</p>
+                <p><strong>Source:</strong> 2022-01-27 15:45 to 2022-01-27 23:30</p>
+                <p><strong>Delay:</strong> 4 steps (60 min)</p>
+                <p><strong>Block length:</strong> 32 steps</p>
+              </div>
+              <a class="image-wrap" href="blocks/val_seg67_lag4_start16282_end16313.svg" target="_blank" rel="noopener noreferrer">
+                <img src="blocks/val_seg67_lag4_start16282_end16313.svg" alt="val | segment 67 | lag=4" loading="lazy" />
+              </a>
+            </article>
+<article class="card">
+              <div class="meta">
+                <h2>val | segment 70 | lag=6</h2>
+                <p><strong>Injected:</strong> 2022-02-10 06:45 to 2022-02-10 14:30</p>
+                <p><strong>Source:</strong> 2022-02-10 05:15 to 2022-02-10 13:00</p>
+                <p><strong>Delay:</strong> 6 steps (90 min)</p>
+                <p><strong>Block length:</strong> 32 steps</p>
+              </div>
+              <a class="image-wrap" href="blocks/val_seg70_lag6_start17414_end17445.svg" target="_blank" rel="noopener noreferrer">
+                <img src="blocks/val_seg70_lag6_start17414_end17445.svg" alt="val | segment 70 | lag=6" loading="lazy" />
+              </a>
+            </article>
+<article class="card">
+              <div class="meta">
+                <h2>val | segment 71 | lag=2</h2>
+                <p><strong>Injected:</strong> 2022-02-17 22:00 to 2022-02-18 05:45</p>
+                <p><strong>Source:</strong> 2022-02-17 21:30 to 2022-02-18 05:15</p>
+                <p><strong>Delay:</strong> 2 steps (30 min)</p>
+                <p><strong>Block length:</strong> 32 steps</p>
+              </div>
+              <a class="image-wrap" href="blocks/val_seg71_lag2_start18015_end18046.svg" target="_blank" rel="noopener noreferrer">
+                <img src="blocks/val_seg71_lag2_start18015_end18046.svg" alt="val | segment 71 | lag=2" loading="lazy" />
+              </a>
+            </article>
+<article class="card">
+              <div class="meta">
+                <h2>test | segment 72 | lag=4</h2>
+                <p><strong>Injected:</strong> 2022-03-26 09:30 to 2022-03-26 17:15</p>
+                <p><strong>Source:</strong> 2022-03-26 08:30 to 2022-03-26 16:15</p>
+                <p><strong>Delay:</strong> 4 steps (60 min)</p>
+                <p><strong>Block length:</strong> 32 steps</p>
+              </div>
+              <a class="image-wrap" href="blocks/test_seg72_lag4_start20233_end20264.svg" target="_blank" rel="noopener noreferrer">
+                <img src="blocks/test_seg72_lag4_start20233_end20264.svg" alt="test | segment 72 | lag=4" loading="lazy" />
+              </a>
+            </article>
+<article class="card">
+              <div class="meta">
+                <h2>test | segment 75 | lag=2</h2>
+                <p><strong>Injected:</strong> 2022-04-12 03:30 to 2022-04-12 11:15</p>
+                <p><strong>Source:</strong> 2022-04-12 03:00 to 2022-04-12 10:45</p>
+                <p><strong>Delay:</strong> 2 steps (30 min)</p>
+                <p><strong>Block length:</strong> 32 steps</p>
+              </div>
+              <a class="image-wrap" href="blocks/test_seg75_lag2_start21296_end21327.svg" target="_blank" rel="noopener noreferrer">
+                <img src="blocks/test_seg75_lag2_start21296_end21327.svg" alt="test | segment 75 | lag=2" loading="lazy" />
+              </a>
+            </article>
+<article class="card">
+              <div class="meta">
+                <h2>test | segment 76 | lag=2</h2>
+                <p><strong>Injected:</strong> 2022-04-15 05:00 to 2022-04-15 12:45</p>
+                <p><strong>Source:</strong> 2022-04-15 04:30 to 2022-04-15 12:15</p>
+                <p><strong>Delay:</strong> 2 steps (30 min)</p>
+                <p><strong>Block length:</strong> 32 steps</p>
+              </div>
+              <a class="image-wrap" href="blocks/test_seg76_lag2_start21582_end21613.svg" target="_blank" rel="noopener noreferrer">
+                <img src="blocks/test_seg76_lag2_start21582_end21613.svg" alt="test | segment 76 | lag=2" loading="lazy" />
+              </a>
+            </article>
+<article class="card">
+              <div class="meta">
+                <h2>test | segment 77 | lag=4</h2>
+                <p><strong>Injected:</strong> 2022-04-22 08:45 to 2022-04-22 16:30</p>
+                <p><strong>Source:</strong> 2022-04-22 07:45 to 2022-04-22 15:30</p>
+                <p><strong>Delay:</strong> 4 steps (60 min)</p>
+                <p><strong>Block length:</strong> 32 steps</p>
+              </div>
+              <a class="image-wrap" href="blocks/test_seg77_lag4_start22137_end22168.svg" target="_blank" rel="noopener noreferrer">
+                <img src="blocks/test_seg77_lag4_start22137_end22168.svg" alt="test | segment 77 | lag=4" loading="lazy" />
+              </a>
+            </article>
+<article class="card">
+              <div class="meta">
+                <h2>test | segment 78 | lag=6</h2>
+                <p><strong>Injected:</strong> 2022-04-27 08:45 to 2022-04-27 16:30</p>
+                <p><strong>Source:</strong> 2022-04-27 07:15 to 2022-04-27 15:00</p>
+                <p><strong>Delay:</strong> 6 steps (90 min)</p>
+                <p><strong>Block length:</strong> 32 steps</p>
+              </div>
+              <a class="image-wrap" href="blocks/test_seg78_lag6_start22609_end22640.svg" target="_blank" rel="noopener noreferrer">
+                <img src="blocks/test_seg78_lag6_start22609_end22640.svg" alt="test | segment 78 | lag=6" loading="lazy" />
+              </a>
+            </article>
+<article class="card">
+              <div class="meta">
+                <h2>test | segment 79 | lag=6</h2>
+                <p><strong>Injected:</strong> 2022-04-29 02:00 to 2022-04-29 09:45</p>
+                <p><strong>Source:</strong> 2022-04-29 00:30 to 2022-04-29 08:15</p>
+                <p><strong>Delay:</strong> 6 steps (90 min)</p>
+                <p><strong>Block length:</strong> 32 steps</p>
+              </div>
+              <a class="image-wrap" href="blocks/test_seg79_lag6_start22766_end22797.svg" target="_blank" rel="noopener noreferrer">
+                <img src="blocks/test_seg79_lag6_start22766_end22797.svg" alt="test | segment 79 | lag=6" loading="lazy" />
+              </a>
+            </article>
+    </section>
+  </div>
+</body>
+</html>

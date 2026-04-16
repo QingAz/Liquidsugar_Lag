@@ -1,0 +1,42 @@
+# =========================
+# LiquidSugar local-bump lag config
+# =========================
+
+input_csv: /projects/p32954/dimf_liquid_sugar_repo-490/data/LiquidSugar.csv
+output_root: /projects/p32954/liquidsugar_lag_framework/outputs
+experiment_name: liquidsugar_local_bump_stage12_smooth_d6
+
+timestamp_col: TimeStamp
+target_col: yield_flow
+nominal_step_minutes: 15
+
+feature_prefix:
+  feed: feed_
+  stage1: stage1_
+  stage2: stage2_
+  stage3: stage3_
+
+g_break_minutes: 120
+
+split:
+  train_ratio: 0.7
+  val_ratio: 0.1
+  test_ratio: 0.2
+  allocation_unit: effective_windows
+  min_segments:
+    train: 2
+    val: 2
+    test: 2
+
+seed: 20260412
+
+local_bump:
+  shape: smooth
+  dmax: 6
+  width: 12
+  inject_ratio: 0.5
+  margin: 28
+
+window:
+  history_steps: 96
+  horizon_steps: 4

@@ -1,6 +1,6 @@
 # LiquidSugar Scheme B Lag Framework
 
-这个项目用于按你们当前定下来的 **方案 B 标准主实验**，生成带有局部块状 lag 的 LiquidSugar 数据集，并输出可直接用于 DIMF 的窗口样本。
+这个项目用于按你们当前定下来的 **方案 B 标准主实验**，生成带有局部块状 lag 或局部 smooth bump lag 的 LiquidSugar 数据集，并输出可直接用于 DIMF 的窗口样本。
 
 默认主实验设定：
 
@@ -8,7 +8,7 @@
 - 目标列：`yield_flow`
 - 名义时间步：`15 min`
 - 原始 gap 分段阈值：`120 min`
-- 切分方式：完整时间线 `70 / 10 / 20`
+- 切分方式：按 segment 起始时间顺序、以完整 segment 为单位切分，并按累计有效窗口数逼近 `70 / 10 / 20`
 - 注入对象：`stage2_*`
 - lag 类型：`2 / 4 / 6` step
 - lag 物理含义：`30 / 60 / 90 min`
@@ -22,7 +22,7 @@
 1. 读取原始 `LiquidSugar.csv`，按 `TimeStamp` 升序排序。
 2. 用 `g_break_minutes = 120` 在原始数据上切分 segment。
 3. 在每个原始 segment 内重建 `15 min` 名义时间网格，并对数值列做时间插值。
-4. 在完整时间线上按顺序切分 `train / val / test = 70 / 10 / 20`。
+4. 按 segment 起始时间顺序切分完整 segment，并按累计有效窗口数逼近 `train / val / test = 70 / 10 / 20`。
 5. 只对 `stage2_*` 变量注入局部块状硬平移 lag。
 6. 用注入后的 `train` 估计标准化统计量，并应用到 `val / test`。
 7. 构造滑动窗口，并用窗口末端时刻的真实 lag 作为 `lag_label`。
@@ -132,4 +132,4 @@ X_t=[x_{t-L+1},\dots,x_t], \quad y_t=yield\_flow_{t+H}
 
 这套框架现在对应的是：
 
-> **先按原始 gap 切 segment，再在 segment 内规则化到 15 分钟时间网格，然后按完整时间线顺序切分 70/10/20，最后在各 split 的合法连续 segment 内，对 stage2 全部变量注入 2/4/6 step 的局部块状 lag，并显式保存 `g_{1→2}(t)` 与窗口标签。**
+> **先按原始 gap 切 segment，再在 segment 内规则化到 15 分钟时间网格，然后按 segment 起始时间顺序用完整 segment 做 train/val/test 切分，并按累计有效窗口数逼近 70/10/20，最后在各 split 的合法 segment 内做 lag 注入，并显式保存 `g_{1→2}(t)` 与窗口标签。**

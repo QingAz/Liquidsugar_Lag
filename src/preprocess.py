@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional, Tuple
 
 import pandas as pd
 
@@ -126,6 +126,168 @@ def regularize_to_nominal_grid(
     return out
 
 
+def _normalize_split_ratios(split_config: Dict[str, float]) -> Tuple[float, float, float]:
+    """将 train / val / test 比例归一化到和为 1。"""
+    train_ratio = float(split_config["train_ratio"])
+    val_ratio = float(split_config["val_ratio"])
+    test_ratio = float(split_config["test_ratio"])
+
+    total = train_ratio + val_ratio + test_ratio
+    if total <= 0:
+        raise ValueError("split ratios must sum to a positive value")
+    return train_ratio / total, val_ratio / total, test_ratio / total
+
+
+def _segment_allocation_unit(
+    seg_len: int,
+    allocation_unit: str,
+    history_steps: Optional[int],
+    horizon_steps: Optional[int],
+) -> int:
+    """计算单个 segment 在切分时使用的预算单位。"""
+    seg_len = int(seg_len)
+
+    if allocation_unit == "rows":
+        return seg_len
+
+    if allocation_unit == "effective_windows":
+        if history_steps is None or horizon_steps is None:
+            raise ValueError(
+                "allocation_unit='effective_windows' requires history_steps and horizon_steps"
+            )
+        return max(seg_len - int(history_steps) - int(horizon_steps) + 1, 0)
+
+    raise ValueError(f"Unknown split allocation_unit={allocation_unit}")
+
+
+def _time_sorted_segment_summary(
+    df: pd.DataFrame,
+    timestamp_col: str,
+    split_config: Dict[str, float],
+    history_steps: Optional[int],
+    horizon_steps: Optional[int],
+) -> pd.DataFrame:
+    """按 segment 起始时间排序，并计算每段用于切分的预算单位。"""
+    if "segment_id" not in df.columns:
+        raise ValueError("segment_id column is required for time-sorted segment split")
+
+    allocation_unit = str(split_config.get("allocation_unit", "effective_windows")).lower()
+    summary = (
+        df.groupby("segment_id", sort=True)
+        .agg(
+            seg_start_time=(timestamp_col, "min"),
+            seg_end_time=(timestamp_col, "max"),
+            seg_len=("segment_id", "size"),
+        )
+        .reset_index()
+        .sort_values(["seg_start_time", "segment_id"])
+        .reset_index(drop=True)
+    )
+    summary["allocation_units"] = summary["seg_len"].apply(
+        lambda seg_len: _segment_allocation_unit(
+            seg_len=seg_len,
+            allocation_unit=allocation_unit,
+            history_steps=history_steps,
+            horizon_steps=horizon_steps,
+        )
+    ).astype(int)
+    return summary
+
+
+def _choose_time_sorted_segment_boundaries(
+    segment_summary: pd.DataFrame,
+    split_config: Dict[str, float],
+) -> Tuple[int, int]:
+    """
+    在时间有序的 segment 序列上寻找两个边界，使各 split 的累计预算单位尽量逼近目标比例。
+
+    返回：
+    - train_end_idx: train 最后一个 segment 在 summary 中的下标
+    - val_end_idx: val 最后一个 segment 在 summary 中的下标
+    """
+    n_segments = int(len(segment_summary))
+    if n_segments < 3:
+        raise ValueError("At least 3 segments are required for train/val/test chronological split")
+
+    weights = segment_summary["allocation_units"].astype(float).tolist()
+    total_units = float(sum(weights))
+    if total_units <= 0:
+        raise ValueError(
+            "All segments have zero allocation units; cannot build a split from effective windows"
+        )
+
+    train_ratio, val_ratio, test_ratio = _normalize_split_ratios(split_config)
+    min_segments_cfg = split_config.get("min_segments", {})
+    min_train_segments = int(min_segments_cfg.get("train", 1))
+    min_val_segments = int(min_segments_cfg.get("val", 1))
+    min_test_segments = int(min_segments_cfg.get("test", 1))
+    if min(min_train_segments, min_val_segments, min_test_segments) <= 0:
+        raise ValueError("min_segments for train/val/test must all be positive")
+    if min_train_segments + min_val_segments + min_test_segments > n_segments:
+        raise ValueError(
+            "Requested min_segments exceed available segment count for chronological split"
+        )
+    best_candidate = None
+    best_deviation = None
+
+    prefix = [0.0]
+    for weight in weights:
+        prefix.append(prefix[-1] + weight)
+
+    for train_end_idx in range(0, n_segments - 2):
+        train_segment_count = train_end_idx + 1
+        train_units = prefix[train_end_idx + 1]
+        for val_end_idx in range(train_end_idx + 1, n_segments - 1):
+            val_segment_count = val_end_idx - train_end_idx
+            test_segment_count = n_segments - val_end_idx - 1
+            if (
+                train_segment_count < min_train_segments
+                or val_segment_count < min_val_segments
+                or test_segment_count < min_test_segments
+            ):
+                continue
+
+            val_units = prefix[val_end_idx + 1] - prefix[train_end_idx + 1]
+            test_units = total_units - prefix[val_end_idx + 1]
+
+            if min(train_units, val_units, test_units) <= 0:
+                continue
+
+            train_actual = train_units / total_units
+            val_actual = val_units / total_units
+            test_actual = test_units / total_units
+            candidate = (
+                abs(train_actual - train_ratio)
+                + abs(val_actual - val_ratio)
+                + abs(test_actual - test_ratio),
+                abs(train_actual - train_ratio),
+                abs(val_actual - val_ratio),
+                abs(test_actual - test_ratio),
+                train_end_idx,
+                val_end_idx,
+            )
+            if best_candidate is None or candidate < best_candidate:
+                best_candidate = candidate
+                best_deviation = candidate[0]
+
+    if best_candidate is None:
+        raise ValueError(
+            "Unable to find a chronological segment split with positive allocation units in every split"
+        )
+
+    max_ratio_deviation = split_config.get("max_ratio_deviation")
+    if max_ratio_deviation is not None:
+        threshold = float(max_ratio_deviation)
+        if best_deviation is not None and best_deviation > threshold:
+            raise ValueError(
+                "Best chronological split still exceeds max_ratio_deviation: "
+                f"{best_deviation:.4f} > {threshold:.4f}. "
+                "Consider relaxing split ratios or min_segments."
+            )
+
+    return int(best_candidate[4]), int(best_candidate[5])
+
+
 def split_by_time_order(
     df: pd.DataFrame,
     split_config: Dict[str, float],
@@ -161,6 +323,42 @@ def split_by_time_order(
     out.loc[out.index < n_train, "split"] = "train"
     out.loc[(out.index >= n_train) & (out.index < n_train + n_val), "split"] = "val"
 
+    return out
+
+
+def split_by_time_sorted_segments(
+    df: pd.DataFrame,
+    split_config: Dict[str, float],
+    timestamp_col: str,
+    history_steps: Optional[int] = None,
+    horizon_steps: Optional[int] = None,
+) -> pd.DataFrame:
+    """
+    按 segment 起始时间顺序分配完整 segment，并用累计预算单位逼近目标比例。
+
+    默认预算单位为有效窗口数：
+        max(seg_len - history_steps - horizon_steps + 1, 0)
+    也可通过 split.allocation_unit='rows' 改为按行数逼近。
+    """
+    out = df.copy()
+    summary = _time_sorted_segment_summary(
+        df=out,
+        timestamp_col=timestamp_col,
+        split_config=split_config,
+        history_steps=history_steps,
+        horizon_steps=horizon_steps,
+    )
+    train_end_idx, val_end_idx = _choose_time_sorted_segment_boundaries(
+        segment_summary=summary,
+        split_config=split_config,
+    )
+
+    train_ids = set(summary.loc[:train_end_idx, "segment_id"].astype(int).tolist())
+    val_ids = set(summary.loc[train_end_idx + 1:val_end_idx, "segment_id"].astype(int).tolist())
+
+    out["split"] = "test"
+    out.loc[out["segment_id"].isin(train_ids), "split"] = "train"
+    out.loc[out["segment_id"].isin(val_ids), "split"] = "val"
     return out
 
 

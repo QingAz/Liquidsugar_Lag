@@ -1,0 +1,254 @@
+[
+  {
+    "split_name": "test",
+    "segment_id": 72,
+    "shape": "smooth",
+    "dmax": 2,
+    "width": 12,
+    "start_idx": 20126,
+    "end_idx": 20137
+  },
+  {
+    "split_name": "test",
+    "segment_id": 74,
+    "shape": "smooth",
+    "dmax": 6,
+    "width": 12,
+    "start_idx": 21079,
+    "end_idx": 21090
+  },
+  {
+    "split_name": "test",
+    "segment_id": 75,
+    "shape": "smooth",
+    "dmax": 6,
+    "width": 12,
+    "start_idx": 21383,
+    "end_idx": 21394
+  },
+  {
+    "split_name": "test",
+    "segment_id": 77,
+    "shape": "smooth",
+    "dmax": 4,
+    "width": 12,
+    "start_idx": 21786,
+    "end_idx": 21797
+  },
+  {
+    "split_name": "test",
+    "segment_id": 78,
+    "shape": "smooth",
+    "dmax": 4,
+    "width": 12,
+    "start_idx": 22639,
+    "end_idx": 22650
+  },
+  {
+    "split_name": "test",
+    "segment_id": 79,
+    "shape": "smooth",
+    "dmax": 2,
+    "width": 12,
+    "start_idx": 22797,
+    "end_idx": 22808
+  },
+  {
+    "split_name": "train",
+    "segment_id": 3,
+    "shape": "smooth",
+    "dmax": 4,
+    "width": 12,
+    "start_idx": 650,
+    "end_idx": 661
+  },
+  {
+    "split_name": "train",
+    "segment_id": 7,
+    "shape": "smooth",
+    "dmax": 4,
+    "width": 12,
+    "start_idx": 1076,
+    "end_idx": 1087
+  },
+  {
+    "split_name": "train",
+    "segment_id": 9,
+    "shape": "smooth",
+    "dmax": 6,
+    "width": 12,
+    "start_idx": 1604,
+    "end_idx": 1615
+  },
+  {
+    "split_name": "train",
+    "segment_id": 14,
+    "shape": "smooth",
+    "dmax": 6,
+    "width": 12,
+    "start_idx": 2328,
+    "end_idx": 2339
+  },
+  {
+    "split_name": "train",
+    "segment_id": 24,
+    "shape": "smooth",
+    "dmax": 2,
+    "width": 12,
+    "start_idx": 3828,
+    "end_idx": 3839
+  },
+  {
+    "split_name": "train",
+    "segment_id": 25,
+    "shape": "smooth",
+    "dmax": 6,
+    "width": 12,
+    "start_idx": 3996,
+    "end_idx": 4007
+  },
+  {
+    "split_name": "train",
+    "segment_id": 32,
+    "shape": "smooth",
+    "dmax": 6,
+    "width": 12,
+    "start_idx": 5952,
+    "end_idx": 5963
+  },
+  {
+    "split_name": "train",
+    "segment_id": 34,
+    "shape": "smooth",
+    "dmax": 2,
+    "width": 12,
+    "start_idx": 6403,
+    "end_idx": 6414
+  },
+  {
+    "split_name": "train",
+    "segment_id": 35,
+    "shape": "smooth",
+    "dmax": 4,
+    "width": 12,
+    "start_idx": 6638,
+    "end_idx": 6649
+  },
+  {
+    "split_name": "train",
+    "segment_id": 37,
+    "shape": "smooth",
+    "dmax": 2,
+    "width": 12,
+    "start_idx": 7013,
+    "end_idx": 7024
+  },
+  {
+    "split_name": "train",
+    "segment_id": 39,
+    "shape": "smooth",
+    "dmax": 4,
+    "width": 12,
+    "start_idx": 7613,
+    "end_idx": 7624
+  },
+  {
+    "split_name": "train",
+    "segment_id": 40,
+    "shape": "smooth",
+    "dmax": 4,
+    "width": 12,
+    "start_idx": 8001,
+    "end_idx": 8012
+  },
+  {
+    "split_name": "train",
+    "segment_id": 41,
+    "shape": "smooth",
+    "dmax": 6,
+    "width": 12,
+    "start_idx": 8583,
+    "end_idx": 8594
+  },
+  {
+    "split_name": "train",
+    "segment_id": 43,
+    "shape": "smooth",
+    "dmax": 2,
+    "width": 12,
+    "start_idx": 9353,
+    "end_idx": 9364
+  },
+  {
+    "split_name": "train",
+    "segment_id": 47,
+    "shape": "smooth",
+    "dmax": 2,
+    "width": 12,
+    "start_idx": 10147,
+    "end_idx": 10158
+  },
+  {
+    "split_name": "train",
+    "segment_id": 48,
+    "shape": "smooth",
+    "dmax": 4,
+    "width": 12,
+    "start_idx": 10841,
+    "end_idx": 10852
+  },
+  {
+    "split_name": "train",
+    "segment_id": 51,
+    "shape": "smooth",
+    "dmax": 2,
+    "width": 12,
+    "start_idx": 11446,
+    "end_idx": 11457
+  },
+  {
+    "split_name": "train",
+    "segment_id": 52,
+    "shape": "smooth",
+    "dmax": 2,
+    "width": 12,
+    "start_idx": 11715,
+    "end_idx": 11726
+  },
+  {
+    "split_name": "train",
+    "segment_id": 55,
+    "shape": "smooth",
+    "dmax": 4,
+    "width": 12,
+    "start_idx": 12436,
+    "end_idx": 12447
+  },
+  {
+    "split_name": "train",
+    "segment_id": 57,
+    "shape": "smooth",
+    "dmax": 6,
+    "width": 12,
+    "start_idx": 12821,
+    "end_idx": 12832
+  },
+  {
+    "split_name": "train",
+    "segment_id": 60,
+    "shape": "smooth",
+    "dmax": 6,
+    "width": 12,
+    "start_idx": 13392,
+    "end_idx": 13403
+  },
+  {
+    "split_name": "val",
+    "segment_id": 71,
+    "shape": "smooth",
+    "dmax": 2,
+    "width": 12,
+    "start_idx": 18159,
+    "end_idx": 18170
+  }
+]
